@@ -2,11 +2,11 @@ const express = require('express')
 const mongoose = require('mongoose')
 const colors = require('colors')
 
-
 const app = express()
 app.use(express.json())
 
 const Users = require('./models/users')
+
 const DB_USER = "test2"
 const DB_PASSWORD = "test2"
 const COLLECTION = "LaboratorioII"
