@@ -33,7 +33,7 @@ app.get('/users', async (req,res) =>{
 
 app.get('/users/:id', async(req,res) =>{
   //console.log(req)
-  const id = req.params.id
+  const id = req.params.id //extraer id del dato
   try {
       const user = await Users.findOne({_id: id})
       if(!user){
@@ -41,8 +41,8 @@ app.get('/users/:id', async(req,res) =>{
         return
       }
       res.status(200).json(user)
-  }catch (error) {
-    res.status(500).json({error: error})
+  } catch (error) {
+      res.status(500).json({error: error})
   }
 }) 
 
