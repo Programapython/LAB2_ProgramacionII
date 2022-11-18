@@ -51,6 +51,9 @@ app.get('/users/:id', async(req,res) =>{
 app.post('/users',async (req, res)=> {
   try {
     const {dni,name, surname, nameUser, gender, age, salary, job} = req.body
+    if(!dni || !name || !surname){
+      res.status(422).json({error: 'El DNI, Nombre y Apellidos son datos obligatorio'})
+    }
     const user ={
       dni,
       name,
