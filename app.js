@@ -22,6 +22,9 @@ app.get('/', (req,res) =>{
 app.get('/users', async (req,res) =>{
   try {
       const Usuario = await Users.find()
+      if (!Usuario || Usuario == ""){
+        return res.status(200).json({mesage: 'No hay datos para mostrar'})
+      }
       res.status(200).json(Usuario)
   }  catch (error) {
       res.status(500).json({ error:error})
