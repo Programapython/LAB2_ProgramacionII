@@ -93,6 +93,30 @@ app.delete('/users/:id', async (req, res) => {
     }
 })
 
+//POST
+app.post('users/:id',async (req, res)=> {
+  const {name, surname, nameUser, gender, age, salary, job} = req.body
+  if (!name){
+    res.status(422).json({error:"Nombre obligatorio"})
+    return
+  }
+  const users ={
+    name,
+    surname,
+    nameUser,
+    gender,
+    age,
+    salary,
+    job,
+  }
+  try {
+    await users.create(users)
+    res.status(201).json({message: 'persona definida'})
+  } catch (error) {
+    res.status(500).json({error:error})
+  }
+})
+
 mongoose.connect(
     `mongodb+srv://${DB_USER}:${DB_PASSWORD}@apicluster.h8qpoxo.mongodb.net/${COLLECTION}?retryWrites=true&w=majority`
     ).then(() => {
