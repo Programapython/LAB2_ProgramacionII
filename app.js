@@ -77,6 +77,24 @@ app.patch('/person/:id', async (req, res) => {
   }
 })
 
+//DELETE
+
+app.delete('/person/:id', async (req, res) => {
+    const id = req.params.id
+    const user = await Users.findOne({ _id: id })
+    if(!user){ //validación antes de remover
+      res.status(422).json({mesage: "User not found"})
+      return
+    }
+    try {
+      await Users.deleteOne({ _id: id })
+      res.status(200).json({ message: 'Usuario removido'})
+      
+    } catch (error) {
+        res.status(500).json({ error:error })
+    }
+})
+
 mongoose.connect(
     `mongodb+srv://${DB_USER}:${DB_PASSWORD}@apicluster.h8qpoxo.mongodb.net/${COLLECTION}?retryWrites=true&w=majority`
     ).then(() => {
