@@ -52,7 +52,7 @@ app.get('/users/:id', async(req,res) =>{
 
 //UPDATE
 
-app.patch('/person/:id', async (req, res) => {
+app.patch('/users/:id', async (req, res) => {
   const id = req.params.id
   const {name, surname, nameUser, gender, age, salary, job} = req.body
   const newData = {
@@ -68,7 +68,7 @@ app.patch('/person/:id', async (req, res) => {
      const update = await Users.updateOne({_id:id}, newData)
      //console.log(update)
      if (update.matchedCount === 0 ){ //validación antes de actualizar
-      return res.status(422).json({message: 'Persona no encontrada'})
+      return res.status(422).json({message: 'User not found'})
      }
      res.status(200).json(update)
 
@@ -79,14 +79,14 @@ app.patch('/person/:id', async (req, res) => {
 
 //DELETE
 
-app.delete('/person/:id', async (req, res) => {
+app.delete('/users/:id', async (req, res) => {
     const id = req.params.id
-    const user = await Users.findOne({ _id: id })
-    if(!user){ //validación antes de remover
-      res.status(422).json({mesage: "User not found"})
-      return
-    }
     try {
+      const user = await Users.findOne({ _id: id })
+      if(!user){ //validación antes de remover
+        res.status(422).json({mesage: "User not found"})
+        return
+        }
       await Users.deleteOne({ _id: id })
       res.status(200).json({ message: 'Usuario removido'})
       
